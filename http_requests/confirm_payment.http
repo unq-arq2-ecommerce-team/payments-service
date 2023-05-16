@@ -1,0 +1,2 @@
+PATCH  http://localhost:8080/payments/123456/confirm HTTP/1.1
+content-type: application/json

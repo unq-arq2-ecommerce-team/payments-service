@@ -1,0 +1,15 @@
+PATCH  http://localhost:8080/payments HTTP/1.1
+content-type: application/json
+{
+   
+    "payment_id": "123456",
+    "method": {
+        "type": "craditCard",
+        "details": {
+        "number": "1234567890123456",
+        "expiration_date": "01/2022",
+        "cvv": "123",
+        "holder_name": "John Doe"
+    }
+    },
+}

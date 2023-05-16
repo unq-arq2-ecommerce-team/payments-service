@@ -1,0 +1,21 @@
+POST http://localhost:8080/payments HTTP/1.1
+content-type: application/json
+
+{
+    "amount": 100,
+    "currency": "EUR",
+    "method": {
+        "type": "craditCard",
+        "details": {
+        "number": "1234567890123456",
+        "expiration_date": "01/2022",
+        "cvv": "123",
+        "holder_name": "John Doe"
+        }
+    },
+    "payer": {
+        "name": "John Doe",
+        "email": "j.doe@gmail.com"
+    },
+    "order_id": "123456"
+}

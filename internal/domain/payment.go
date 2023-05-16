@@ -42,18 +42,11 @@ func (p *Payment) Reset() error {
 	return p.Status.Reset(p)
 }
 
-func (p *Payment) IsConfirmed() bool {
-	return p.Status.IsConfirmed()
-}
-
-func (p *Payment) IsRejected() bool {
-	return p.Status.IsRejected()
-}
-
-func (p *Payment) IsPending() bool {
-	return p.Status.IsPending()
-}
-
 func (p *Payment) Execute() error {
 	return p.Method.Execute(p)
+}
+
+func (p *Payment) UpdatePaymentMethod(method PaymentMethod) {
+	p.Method = method
+	p.Reset()
 }

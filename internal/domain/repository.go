@@ -1,9 +1,7 @@
 package domain
 
 type PaymentRepository interface {
-	Store(payment *Payment) error
+	Save(payment *Payment) (*Payment, error)
 	Find(id string) (*Payment, error)
-	Confirm(id string) error
-	Reject(id string) error
-	Reset(id string) error
+	Update(payment *Payment) (*Payment, error)
 }

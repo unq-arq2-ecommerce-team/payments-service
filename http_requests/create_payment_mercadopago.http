@@ -1,0 +1,18 @@
+POST http://localhost:8080/payments HTTP/1.1
+content-type: application/json
+
+{
+    "amount": 100,
+    "currency": "EUR",
+    "method": {
+        "type": "mercadoPago",
+        "details": {
+        "operation_id": "1234567890123456",
+        }
+    },
+    "payer": {
+        "name": "John Doe",
+        "email": "j.doe@gmail.com"
+    },
+    "order_id": "123456"
+}
