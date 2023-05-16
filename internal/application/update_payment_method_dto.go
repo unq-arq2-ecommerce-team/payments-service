@@ -1,6 +1,6 @@
 package application
 
 type UpdatePaymentMethodDto struct {
-	PaymentId  string `json:"payment_id"`
-	MethodType string `json:"method_type"`
+	PaymentId     string           `json:"payment_id"`
+	PaymentMethod PaymentMethodDto `json:"method"`
 }

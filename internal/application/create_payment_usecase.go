@@ -21,7 +21,7 @@ func (u *CreatePaymentUseCase) Do(input interface{}) (interface{}, error) {
 	paymentDto := input.(*CreatePaymentDto)
 	money := domain.NewMoney(paymentDto.Amount, paymentDto.Currency)
 	payer := domain.NewPayer(paymentDto.Payer.ID, paymentDto.Payer.Name, paymentDto.Payer.Email)
-	paymentMethod, err := domain.NewPaymentMethod(paymentDto.MethodType)
+	paymentMethod, err := domain.NewPaymentMethod(paymentDto.PaymentMethod.Type, paymentDto.PaymentMethod.Details)
 	if err != nil {
 		return nil, err
 	}

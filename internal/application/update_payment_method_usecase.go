@@ -19,7 +19,7 @@ func NewUpdatePaymentMethodUsecaseUseCase(repository domain.PaymentRepository) *
 // create payments use case implementation
 func (u *UpdatePaymentMethodUsecaseUseCase) Do(input interface{}) (interface{}, error) {
 	updatePaymentMethodDto := input.(*UpdatePaymentMethodDto)
-	paymentMethod, err := domain.NewPaymentMethod(updatePaymentMethodDto.MethodType)
+	paymentMethod, err := domain.NewPaymentMethod(updatePaymentMethodDto.PaymentMethod.Type, updatePaymentMethodDto.PaymentMethod.Details)
 	if err != nil {
 		return nil, err
 	}
