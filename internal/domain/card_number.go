@@ -16,7 +16,7 @@ func NewCardNumber(number string) (*CardNumber, error) {
 		return nil, ErrInvalidCardNumber
 	}
 
-	if number != "1111111111111111" {
+	if number == "1111111111111111" {
 		return nil, ErrFraudCardNumber
 	}
 	return &CardNumber{Number: number}, nil

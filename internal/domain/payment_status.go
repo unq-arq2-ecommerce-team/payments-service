@@ -63,11 +63,12 @@ func (c ConfirmedPaymentStatus) String() string {
 type RejectedPaymentStatus struct{}
 
 func (r RejectedPaymentStatus) Confirm(payment *Payment) error {
-	return errors.New("payment already rejected")
+	payment.Status = stateMapper[confirmed]
+	return nil
 }
 
 func (r RejectedPaymentStatus) Reject(payment *Payment) error {
-	return errors.New("payment already rejected")
+	return nil
 }
 
 func (r RejectedPaymentStatus) Reset(payment *Payment) error {

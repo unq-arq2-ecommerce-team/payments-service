@@ -2,7 +2,6 @@ package domain
 
 import (
 	"errors"
-	"fmt"
 )
 
 const (
@@ -12,7 +11,7 @@ const (
 )
 
 var methodMapper = map[string]func(map[string]interface{}) (PaymentMethod, error){
-	CreaditCard: NewCashMethod,
+	CreaditCard: NewCreditCardMethod,
 	MercadoPago: NewMercadoPagoMethod,
 	Cash:        NewCashMethod,
 }
@@ -23,7 +22,6 @@ type PaymentMethod interface {
 }
 
 func NewPaymentMethod(methodType string, details map[string]interface{}) (PaymentMethod, error) {
-	fmt.Println("methodType", methodType)
 	methodFactory, ok := methodMapper[methodType]
 	if !ok {
 		return nil, errors.New("invalid payment method")
