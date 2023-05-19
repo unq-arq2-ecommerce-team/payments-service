@@ -1,6 +1,9 @@
 package domain
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 const (
 	CreaditCard = "creditCard"
@@ -20,6 +23,7 @@ type PaymentMethod interface {
 }
 
 func NewPaymentMethod(methodType string, details map[string]interface{}) (PaymentMethod, error) {
+	fmt.Println("methodType", methodType)
 	methodFactory, ok := methodMapper[methodType]
 	if !ok {
 		return nil, errors.New("invalid payment method")
@@ -51,10 +55,10 @@ func NewMercadoPagoMethod(details map[string]interface{}) (PaymentMethod, error)
 }
 
 type CreditCardMethod struct {
-	CardNumber     string
-	ExpirationDate string
-	CVV            string
-	HolderName     string
+	CardNumber     *CardNumber
+	ExpirationDate *ExpirationDate
+	CVV            *CVV
+	HolderName     *HolderName
 }
 
 func (c *CreditCardMethod) Type() string {
@@ -66,21 +70,38 @@ func (c *CreditCardMethod) Execute(payment *Payment) error {
 }
 
 func NewCreditCardMethod(details map[string]interface{}) (PaymentMethod, error) {
-	cardNumber, ok := details["card_number"].(string)
+	cardNumberString, ok := details["card_number"].(string)
 	if !ok {
 		return nil, errors.New("invalid card_number")
 	}
-	expirationDate, ok := details["expiration_date"].(string)
+	cardNumber, err := NewCardNumber(cardNumberString)
+	if err != nil {
+		return nil, err
+	}
+	expirationDateString, ok := details["expiration_date"].(string)
 	if !ok {
 		return nil, errors.New("invalid expiration_date")
 	}
-	cvv, ok := details["cvv"].(string)
+	expirationDate, err := NewExpirationDate(expirationDateString)
+
+	if err != nil {
+		return nil, err
+	}
+	cvvString, ok := details["cvv"].(string)
 	if !ok {
 		return nil, errors.New("invalid cvv")
 	}
-	holderName, ok := details["holder_name"].(string)
+	cvv, err := NewCVV(cvvString)
+	if err != nil {
+		return nil, err
+	}
+	holderNameString, ok := details["holder_name"].(string)
 	if !ok {
 		return nil, errors.New("invalid holder_name")
+	}
+	holderName, err := NewHolderName(holderNameString)
+	if err != nil {
+		return nil, err
 	}
 	return &CreditCardMethod{
 		CardNumber:     cardNumber,

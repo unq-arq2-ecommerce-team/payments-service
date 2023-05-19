@@ -44,7 +44,7 @@ func (p PendingPaymentStatus) String() string {
 type ConfirmedPaymentStatus struct{}
 
 func (c ConfirmedPaymentStatus) Confirm(payment *Payment) error {
-	return errors.New("payment already confirmed")
+	return nil
 }
 
 func (c ConfirmedPaymentStatus) Reject(payment *Payment) error {

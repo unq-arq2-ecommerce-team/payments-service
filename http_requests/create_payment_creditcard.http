@@ -5,17 +5,14 @@ content-type: application/json
     "amount": 100,
     "currency": "EUR",
     "method": {
-        "type": "craditCard",
+        "type": "creditCard",
         "details": {
-        "number": "1234567890123456",
+        "number": "1234123412341234",
         "expiration_date": "01/2022",
         "cvv": "123",
         "holder_name": "John Doe"
         }
     },
-    "payer": {
-        "name": "John Doe",
-        "email": "j.doe@gmail.com"
-    },
+    "payer_id": "1234567890123456",
     "order_id": "123456"
 }

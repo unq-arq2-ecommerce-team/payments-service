@@ -10,9 +10,6 @@ content-type: application/json
         "operation_id": "1234567890123456",
         }
     },
-    "payer": {
-        "name": "John Doe",
-        "email": "j.doe@gmail.com"
-    },
+    "payer_id": "1234567890123456",
     "order_id": "123456"
 }

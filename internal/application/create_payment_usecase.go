@@ -20,13 +20,12 @@ func NewCreatePaymentUseCase(repository domain.PaymentRepository) *CreatePayment
 func (u *CreatePaymentUseCase) Do(input interface{}) (interface{}, error) {
 	paymentDto := input.(*CreatePaymentDto)
 	money := domain.NewMoney(paymentDto.Amount, paymentDto.Currency)
-	payer := domain.NewPayer(paymentDto.Payer.ID, paymentDto.Payer.Name, paymentDto.Payer.Email)
 	paymentMethod, err := domain.NewPaymentMethod(paymentDto.PaymentMethod.Type, paymentDto.PaymentMethod.Details)
 	if err != nil {
 		return nil, err
 	}
 
-	payment := domain.NewPayment(money, paymentMethod, payer, paymentDto.OrderID)
+	payment := domain.NewPayment(money, paymentMethod, paymentDto.PayerID, paymentDto.OrderID)
 
 	payment, err = u.repository.Save(payment)
 	if err != nil {

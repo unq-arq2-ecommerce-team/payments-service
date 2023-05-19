@@ -11,19 +11,19 @@ type Payment struct {
 	Money        *Money
 	Method       PaymentMethod
 	Status       PaymentStatus
-	Payer        *Payer
+	PayerID      string
 	CreationDate time.Time
 	OrderID      string
 }
 
-func NewPayment(money *Money, method PaymentMethod, payer *Payer, orderID string) *Payment {
+func NewPayment(money *Money, method PaymentMethod, payerID string, orderID string) *Payment {
 	id := uuid.New().String()
 	payment := &Payment{
 		ID:           id,
 		Money:        money,
 		Method:       method,
-		Status:       stateMapper[pending],
-		Payer:        payer,
+		Status:       stateMapper[confirmed],
+		PayerID:      payerID,
 		CreationDate: time.Now(),
 		OrderID:      orderID,
 	}
