@@ -15,10 +15,10 @@ RUN go mod download
 COPY . .
 
 # Compilar el proyecto teniendo en cuenta la ubicación de main.go en la carpeta 'cmd'
-RUN go build -o main ./cmd
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o main ./cmd
 
 # Exponer el puerto que utiliza la aplicación
-EXPOSE 8083
+#EXPOSE 8083
 
 # Ejecutar la aplicación
 CMD ["./main"]

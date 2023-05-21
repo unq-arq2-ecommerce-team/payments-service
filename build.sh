@@ -26,7 +26,7 @@ if [ "$run_tests" == "true" ]; then
 fi
 
 # Construir la imagen de Docker
-docker build -t ecommerse-ddd-hex-arch .
+docker build -t payments-service .
 
 # Si se proporcionó la opción '--run', ejecutar el contenedor después de construir la imagen
 if [ "$run_container" == "true" ]; then
