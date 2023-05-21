@@ -28,7 +28,7 @@ func NewGinApplication(
 	}
 }
 
-func (ginApplication *ginApplication) Run() error {
+func (ginApplication *ginApplication) Run(addr string) error {
 
 	router := gin.Default()
 	router.GET("/", HealthCheck)
@@ -38,7 +38,7 @@ func (ginApplication *ginApplication) Run() error {
 	paymentsSubRouter.PATCH("/", UpdatePaymentMethodHandler(ginApplication.UpdatePaymentMethodUsecase))
 	paymentsSubRouter.PATCH("/:id/confirm", ConfirmPaymentHandler(ginApplication.ConfirmPaymentUsecase))
 	paymentsSubRouter.PATCH("/:id/reject", RejectPaymentHandler(ginApplication.RejectPaymentUsecase))
-	return router.Run()
+	return router.Run(addr)
 }
 
 func HealthCheck(c *gin.Context) {

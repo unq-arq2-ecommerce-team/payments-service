@@ -40,7 +40,7 @@ func main() {
 	rejectPaymentUseCase := application.NewRejectPaymentUseCase(paymentsRepository)
 
 	app := infrastructure.NewGinApplication(createPaymentsUseCase, updatePaymentMethodUseCase, confirmPaymentsUseCase, rejectPaymentUseCase)
-	log.Fatal(app.Run())
+	log.Fatal(app.Run(fmt.Sprintf(":%d", os.Getenv("PORT"))))
 }
 
 func createConnection(user, password string) (*mongo.Client, error) {

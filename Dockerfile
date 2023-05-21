@@ -18,7 +18,7 @@ COPY . .
 RUN go build -o main ./cmd
 
 # Exponer el puerto que utiliza la aplicación
-EXPOSE 8080
+EXPOSE 8083
 
 # Ejecutar la aplicación
 CMD ["./main"]
