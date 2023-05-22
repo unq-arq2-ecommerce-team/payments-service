@@ -6,6 +6,6 @@ type CreatePaymentDto struct {
 	Amount        float64          `json:"amount"`
 	Currency      string           `json:"currency"`
 	PaymentMethod PaymentMethodDto `json:"method"`
-	PayerID       string           `json:"payer_id"`
+	CustomerId    string           `json:"customer_id"`
 	OrderID       string           `json:"order_id"`
 }

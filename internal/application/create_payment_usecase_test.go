@@ -32,8 +32,8 @@ func TestCreatePaymentUsecase(t *testing.T) {
 					"holder_name":     "Walter White",
 				},
 			},
-			PayerID: "123",
-			OrderID: "123",
+			CustomerId: "123",
+			OrderID:    "123",
 		})
 		require.NoError(t, err)
 		require.Equal(t, resPayment, result)
@@ -57,8 +57,8 @@ func TestCreatePaymentUsecase(t *testing.T) {
 					"holder_name":     "Walter White",
 				},
 			},
-			PayerID: "123",
-			OrderID: "123",
+			CustomerId: "123",
+			OrderID:    "123",
 		})
 		require.Error(t, err)
 		require.Equal(t, result, nil)
