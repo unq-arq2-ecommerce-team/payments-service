@@ -22,6 +22,10 @@ func main() {
 	}
 	user := os.Getenv("MONGO_USER")
 	password := os.Getenv("MONGO_PASS")
+	dbName := os.Getenv("MONGO_DATABASE")
+	if user == "" || password == "" || dbName == "" {
+		panic("env vars MONGO_USER or MONGO_PASS or MONGO_DATABASE not found")
+	}
 	mongoConn, err := createConnection(user, password)
 	defer func() {
 		if err = mongoConn.Disconnect(context.Background()); err != nil {
@@ -32,7 +36,7 @@ func main() {
 		panic(err)
 	}
 
-	paymentsRepository := infrastructure.NewMongoPaymentRepository(mongoConn, "payments_service", 10*time.Second)
+	paymentsRepository := infrastructure.NewMongoPaymentRepository(mongoConn, dbName, 10*time.Second)
 
 	createPaymentsUseCase := application.NewCreatePaymentUseCase(paymentsRepository)
 	confirmPaymentsUseCase := application.NewConfirmPaymentUseCase(paymentsRepository)
