@@ -20,13 +20,12 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	user := os.Getenv("MONGO_USER")
-	password := os.Getenv("MONGO_PASS")
-	dbName := os.Getenv("MONGO_DATABASE")
-	if user == "" || password == "" || dbName == "" {
-		panic("env vars MONGO_USER or MONGO_PASS or MONGO_DATABASE not found")
+	mongoUri := os.Getenv("MONGO_URI")
+	mongoDbName := os.Getenv("MONGO_DATABASE")
+	if mongoUri == "" || mongoDbName == "" {
+		panic("env vars MONGO_URI or MONGO_DATABASE not found")
 	}
-	mongoConn, err := createConnection(user, password)
+	mongoConn, err := createConnection(mongoUri)
 	defer func() {
 		if err = mongoConn.Disconnect(context.Background()); err != nil {
 			panic(err)
@@ -36,7 +35,7 @@ func main() {
 		panic(err)
 	}
 
-	paymentsRepository := infrastructure.NewMongoPaymentRepository(mongoConn, dbName, 10*time.Second)
+	paymentsRepository := infrastructure.NewMongoPaymentRepository(mongoConn, mongoDbName, 10*time.Second)
 
 	createPaymentsUseCase := application.NewCreatePaymentUseCase(paymentsRepository)
 	confirmPaymentsUseCase := application.NewConfirmPaymentUseCase(paymentsRepository)
@@ -47,13 +46,10 @@ func main() {
 	log.Fatal(app.Run(fmt.Sprintf(":%s", os.Getenv("PORT"))))
 }
 
-func createConnection(user, password string) (*mongo.Client, error) {
-
-	connString := fmt.Sprintf("mongodb+srv://%s:%s@cluster0.qsyiuh0.mongodb.net/?retryWrites=true&w=majority", user, password)
-
+func createConnection(uri string) (*mongo.Client, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(connString))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
 	if err != nil {
 		return nil, err
 	}
